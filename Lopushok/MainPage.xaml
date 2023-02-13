@@ -25,7 +25,7 @@
         <TextBox x:Name="tb_search" Height="35" Width="350" TextChanged="tb_search_TextChanged"
                  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <!--<ComboBox x:Name="cb_productType" Height="35" Margin="5"
+        <ComboBox x:Name="cb_productType" Height="35" Margin="5"
                   Grid.Column="2" Grid.Row="0"
                   ItemsSource="{Binding ProductType}"
                   SelectedIndex="0"
@@ -35,15 +35,7 @@
                     <TextBlock Text="{Binding Name}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
-        </ComboBox>-->
-
-        <ComboBox
-                    Name="SortTypeComboBox"
-                    SelectedIndex="0"
-                    VerticalContentAlignment="Center"
-                    MinWidth="200"
-                    SelectionChanged="SortTypeComboBox_SelectionChanged"
-                    ItemsSource="{Binding SortList}"/>
+        </ComboBox>
         
         <ComboBox x:Name="cb_filter" Height="35" Margin="5"
                   Grid.Column="3" Grid.Row="0"/>

@@ -23,14 +23,24 @@ namespace Lopushok
     {
         public List<DB.Product> Products { get; set; }
         public List<DB.Product> FilterProduct { get; set; }
-        public List<DB.ProductType> Type { get; set; }
+       // public List<DB.ProductType> Type { get; set; }
         public MainPage()
         {
             InitializeComponent();
 
             prod.ItemsSource = bd_connection.connection.Product.ToList();
 
-            
+            var allTypes = bd_connection.connection.ProductType.ToList();
+            allTypes.Insert(0, new ProductType
+            {
+                Name = "Все типы"
+            });
+            cb_productType.ItemsSource = allTypes;
+
+            cb_productType.SelectedIndex = 0;
+
+            var currentProduct = bd_connection.connection.Product.ToList();
+            prod.ItemsSource = currentProduct;
         }
 
         private void cb_productType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -40,14 +50,14 @@ namespace Lopushok
 
         public void Filter()
         {
-            //FilterProduct = bd_connection.connection.Product.ToList();
-            //var searchingText = tb_search.Text.ToLower();
-            //var productType = cb_productType.SelectedItem as ProductType;
+            var currentProduct = bd_connection.connection.Product.ToList();
 
-            ////FilterProduct = Products.FindAll(product => product.Name.ToLower().Contains(searchingText));
+            if (cb_productType.SelectedIndex > 0)
+                currentProduct = currentProduct.Where(a => a.ProductType == cb_productType.SelectedItem as ProductType).ToList();
 
-            //if (productType.Id != 0)
-            //    FilterProduct = Products.FindAll(product => product.ProductType == productType);
+            currentProduct = currentProduct.Where(p => p.Name.ToLower().Contains(tb_search.Text.ToLower())).ToList();
+
+            prod.ItemsSource = currentProduct.OrderBy(p => p.Article).ToList();
         }
 
         private void tb_search_TextChanged(object sender, TextChangedEventArgs e)
